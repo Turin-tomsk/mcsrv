@@ -1,7 +1,10 @@
 import asyncio
 import aioamqp
 import logging
-import ujson
+try:
+    import ujson as json
+except ImportError:
+    import json
 
 import os
 
@@ -62,7 +65,7 @@ class RMQ(object):
 
     async def publish(self, data, queue, headers=None):
         await self.channel.basic_publish(
-            payload=ujson.dumps(data),
+            payload=json.dumps(data),
             exchange_name=str(self.exchange),
             routing_key=queue,
             properties={
