@@ -2,11 +2,12 @@ from setuptools import setup
 
 setup(
     name='mcsrv',
-    version='1.0.7',
+    version='1.0.8',
     install_requires=[
         "aioredis",
         "aioamqp",
         "aiopg",
+        "ujson",
     ],
     description="Package for small service start",
     author='Stepan Pyzhov',
