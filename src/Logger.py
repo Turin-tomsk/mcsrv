@@ -22,7 +22,7 @@ class Logger(RMQ):
     def __init__(self):
         logger.debug('Logger init')
         self.logger_queue = os.getenv('RMQ_LOGGER', '')
-        super(RMQ, self).__init__()
+        super(Logger, self).__init__()
         if self.logger_queue:
             self.loop.run_until_complete(self.queue_declare([self.logger_queue]))
 
