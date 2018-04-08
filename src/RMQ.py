@@ -55,13 +55,16 @@ class RMQ(object):
         return transport, protocol, channel
 
     async def queue_declare(self, queues):
-        for queue in queues:
-            await self.channel.queue_declare(**queue)
+        for queue_name in queues:
+            if self.exchange != '':
+                await self.channel.queue_bind(queue_name, self.exchange, queue_name)
+            else:
+                await self.channel.queue_declare(queue_name=queue_name)
 
     async def publish(self, data, queue, headers=None):
         await self.channel.basic_publish(
             payload=json.dumps(data),
-            exchange_name=self.exchange,
+            exchange_name=str(self.exchange),
             routing_key=queue,
             properties={
                 'headers': headers if headers else {}
