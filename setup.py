@@ -1,9 +1,8 @@
 from setuptools import setup
-import src
 
 setup(
     name='mcsrv',
-    version=src.__version__,
+    version='1.0.5',
     install_requires=[
         "aioredis",
         "aioamqp",
