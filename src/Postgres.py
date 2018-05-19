@@ -36,7 +36,7 @@ class Postgres(object):
             os.getenv('PG_HOST', '127.0.0.1'),
             os.getenv('PG_PORT', 5432),
         )
-        pool = await aiopg.create_pool(dsn, timeout=1, echo=os.getenv('LOG_LEVEL', None) == 'DEBUG')
+        pool = await aiopg.create_pool(dsn, echo=os.getenv('LOG_LEVEL', None) == 'DEBUG')
         logger.info('Postgres connected')
         async with pool.acquire() as conn:
             async with conn.cursor() as cursor:
