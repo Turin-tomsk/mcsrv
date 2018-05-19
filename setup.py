@@ -11,6 +11,7 @@ setup(
     ],
     description="Package for small service start",
     author='Stepan Pyzhov',
+    author_email='turin.tomsk@gmail.com',
     maintainer='Stepan Pyzhov',
     packages=['mcsrv'],
     package_dir={'mcsrv': 'src'},
