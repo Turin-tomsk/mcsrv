@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='mcsrv',
-    version='1.0.11',
+    version='1.0.12',
     install_requires=[
         "aioredis",
         "aioamqp",

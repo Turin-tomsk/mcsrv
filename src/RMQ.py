@@ -18,6 +18,9 @@ class RMQ(object):
     RMQ_PORT=5672
     RMQ_USER=guest
     RMQ_PASS=guest
+    or
+    RMQ_ADDRESS=amqp://localhost
+
     RMQ_EXCHANGE=
     RMQ_EXCHANGE_TYPE=direct
     """
@@ -41,13 +44,16 @@ class RMQ(object):
         self.transport.close()
 
     async def __rmq_init(self):
-        rmq = {
-            "host": os.getenv('RMQ_HOST', '127.0.0.1'),
-            "port": os.getenv('RMQ_PORT', 5672),
-            "login": os.getenv('RMQ_USER', 'guest'),
-            "password": os.getenv('RMQ_PASS', 'guest'),
-        }
-        transport, protocol = await aioamqp.connect(**rmq)
+        if os.getenv('RMQ_ADDRESS'):
+            transport, protocol = await aioamqp.from_url(os.getenv('RMQ_ADDRESS'))
+        else:
+            rmq = {
+                "host": os.getenv('RMQ_HOST', '127.0.0.1'),
+                "port": os.getenv('RMQ_PORT', 5672),
+                "login": os.getenv('RMQ_USER', 'guest'),
+                "password": os.getenv('RMQ_PASS', 'guest'),
+            }
+            transport, protocol = await aioamqp.connect(**rmq)
         logger.info('RMQ connected')
         channel = await protocol.channel()
 
